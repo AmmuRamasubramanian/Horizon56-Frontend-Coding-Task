@@ -10,6 +10,13 @@ import Archery from '@/assets/icons/Archery.svg'
 
 const store = useAssignmentstore()
 
+interface Assignment {
+  id: number
+  title: string,
+  status: 'Draft' | 'Approved' | 'Active' | 'Completed'
+  remarks: string
+}
+
 interface Props{
     title:string
     id?:number
@@ -27,11 +34,11 @@ const props=withDefaults(defineProps<Props>(),{
     isActive:false
 })
 
-const emit=defineEmits<{
-    (e:'activate', id:number)
+const emit = defineEmits<{
+  activate: []
 }>()
 
-const stepDesc_val=ref<HTMLInputElement>(props.remarks)
+const stepDesc_val=ref<string>(props.remarks ?? '')
 
 const StatusIcons: Record<string, any> = {
   Draft: Workgroup,
@@ -53,11 +60,7 @@ function handleChangeStepVal(e:Event) {
     const target=e.target as HTMLInputElement
     stepDesc_val.value=target.value
     if(props.withUpdatedVal===true){
-        store.updateStatus(
-            props.selectedassignItemId,
-            target.value,
-            props.title
-        )
+       store.updateStatus(props.selectedassignItemId ?? null,target.value, props.title as Assignment['status'])
     }
 }
 
@@ -75,7 +78,7 @@ function handleChangeStepVal(e:Event) {
             'step-item__circle--active': props.isActive,
             'step-item__circle--inactive': !props.isActive
             }"
-            @click="emit('activate', props.id!)"
+            @click="emit('activate')"
         >
             <div 
             v-if="props.isActive"

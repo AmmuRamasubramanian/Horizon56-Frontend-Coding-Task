@@ -61,7 +61,7 @@ function activateStep(id: number) {
   activeStepId.value = id
   if (props.withUpdatedVal === true) {
     const statusValue = stepToStatusMap[id] ?? 'Draft'
-    store.updateStatus(props.selectedassignItem?.id,'', statusValue)
+    store.updateStatus(props.selectedassignItem?.id ?? null,'', statusValue)
   }
 }
 

@@ -37,7 +37,7 @@ export const useAssignmentstore=defineStore('assignments', {
     ] as Assignment[]
   }),
   actions:{
-    updateStatus(id:number, remarks:string, title:Assignment['status']){
+    updateStatus(id:number | null, remarks:string, title:Assignment['status']){
       const item=this.assignments.find(a=>a.id===id)
       if(item){
         item.remarks=remarks

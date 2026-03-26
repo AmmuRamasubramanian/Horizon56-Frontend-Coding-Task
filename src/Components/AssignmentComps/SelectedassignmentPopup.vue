@@ -13,7 +13,7 @@ interface Assignment {
 }
 
 interface Props{
-    selectedassignItem:Assignment | null
+    selectedassignItem:Assignment | undefined
     isMobileView?:boolean | null
 }
 
@@ -31,21 +31,19 @@ const popupRef=ref<HTMLElement | null>(null)
 
 let motionControls: any = null
 
+
 watch(
   () => props.selectedassignItem,
   (newVal) => {
     if (newVal && popupRef.value) {
-      // initialize motion only after element exists
       const motion = useMotion(popupRef, {
-        initial: isMobileView()
+        initial: props.isMobileView
           ? { y: '100%' }
           : { scale: 0.98, opacity: 0.98 }
       })
-      motionControls = motion.motionControls
 
-      // animate after mount
-      motionControls.start(
-        isMobileView()
+      motion.apply(
+        props.isMobileView
           ? { y: '0%', transition: { type: 'tween', duration: 0.3 } }
           : { scale: 1, opacity: 1, transition: { type: 'spring', duration: 0.3 } }
       )
