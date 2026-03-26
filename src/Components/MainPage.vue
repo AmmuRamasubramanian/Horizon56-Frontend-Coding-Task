@@ -28,32 +28,32 @@ function ActivateNavfunc(value:string){
 
 const isComponentTabActive=computed(()=>activeNav.value==='component')
 
-const sidenavbar_shrink_width=computed(()=>screenWidth.value<1300)
-const sidenavbar_fixed_width=computed(()=>screenWidth.value<1020)
-const mobilenavbar_width=computed(()=>screenWidth.value<570)
+const sidenavbarShrinkWidth=computed(()=>screenWidth.value<1300)
+const sidenavbarFixedWidth=computed(()=>screenWidth.value<1020)
+const mobilenavbarWidth=computed(()=>screenWidth.value<570)
 
 </script>
 
 <template>
-    <div class="topcontentdiv" :class="[sidenavbar_fixed_width ? 'topcontentdiv--flextopdiv' : '']">
+    <div class="topcontentdiv" :class="[sidenavbarFixedWidth ? 'topcontentdiv--flextopdiv' : '']">
         <!-- --------------------SIDE NAV BAR VIEW-------------------------- -->
-        <div class="sidebar" v-if="!mobilenavbar_width" :class="[sidenavbar_fixed_width ? 'sidebar--sideNavFixed' : '']">
-            <div class="sidebar__brand" :class="{ 'sidebar__brand--collapsed': sidenavbar_shrink_width }">
+        <div class="sidebar" v-if="!mobilenavbarWidth" :class="[sidenavbarFixedWidth ? 'sidebar--sideNavFixed' : '']">
+            <div class="sidebar__brand" :class="{ 'sidebar__brand--collapsed': sidenavbarShrinkWidth }">
                 <img :src="horizon56" class="sidebar__logo" />
                 
                 <div class="sidebar__title-wrapper">
-                <p v-if="!sidenavbar_shrink_width" class="sidebar__title">Horizon</p>
+                <p v-if="!sidenavbarShrinkWidth" class="sidebar__title">Horizon</p>
                 </div>
             </div>
 
-            <div class="sidebar__menu" :class="{ 'sidebar__menu--collapsed': sidenavbar_shrink_width }">
+            <div class="sidebar__menu" :class="{ 'sidebar__menu--collapsed': sidenavbarShrinkWidth }">
                 
                 <div 
                 class="sidebar__item"
                 @click="ActivateNavfunc('component')"
                 :class="[
                 { 'sidebar__item--active': isComponentTabActive },
-                { 'sidebar__item--collapsed': sidenavbar_shrink_width }
+                { 'sidebar__item--collapsed': sidenavbarShrinkWidth }
                 ]"
                 >
                 <Zap 
@@ -62,7 +62,7 @@ const mobilenavbar_width=computed(()=>screenWidth.value<570)
                 />
                 
                 <p 
-                    v-if="!sidenavbar_shrink_width"
+                    v-if="!sidenavbarShrinkWidth"
                     class="sidebar__text"
                     :class="{ 'sidebar__text--inactive': !isComponentTabActive }"
                 >
@@ -77,7 +77,7 @@ const mobilenavbar_width=computed(()=>screenWidth.value<570)
                 @click="ActivateNavfunc('dynamically_executed')"
                 :class="[
                 { 'sidebar__item--active': !isComponentTabActive },
-                { 'sidebar__item--collapsed': sidenavbar_shrink_width }
+                { 'sidebar__item--collapsed': sidenavbarShrinkWidth }
                 ]"
                 >
                 <Puzzle 
@@ -86,7 +86,7 @@ const mobilenavbar_width=computed(()=>screenWidth.value<570)
                 />
 
                 <p 
-                    v-if="!sidenavbar_shrink_width"
+                    v-if="!sidenavbarShrinkWidth"
                     class="sidebar__text"
                     :class="{ 'sidebar__text--inactive': isComponentTabActive }"
                 >

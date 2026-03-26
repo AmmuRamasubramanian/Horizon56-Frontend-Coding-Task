@@ -29,8 +29,6 @@ function onClose(){
 
 const popupRef=ref<HTMLElement | null>(null)
 
-let motionControls: any = null
-
 
 watch(
   () => props.selectedassignItem,
