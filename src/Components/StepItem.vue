@@ -4,9 +4,6 @@
 import {ref, watch, computed} from 'vue'
 import {useAssignmentstore} from '@/store/assignmentStore'
 import Workgroup from '@/assets/icons/Workgroup.svg'
-import Usercheck from '@/assets/icons/Usercheck.svg'
-import Shieldcheck from '@/assets/icons/Shieldcheck.svg'
-import Archery from '@/assets/icons/Archery.svg'
 
 const store = useAssignmentstore()
 
@@ -70,6 +67,7 @@ function handleChangeStepVal(e:Event) {
             'step-item__circle--active': props.isActive,
             'step-item__circle--inactive': !props.isActive
             }"
+            @click="emit('activate')"
         >
             <div 
             v-if="props.isActive"
@@ -116,7 +114,7 @@ function handleChangeStepVal(e:Event) {
                 <textarea
                 :value="stepDesc_val"
                 class="step-item__inputText"
-                placeholder="Share your reviews.."
+                placeholder="Start typing..."
                 :style="{
                     maxHeight: '100%'
                 }"
@@ -151,6 +149,7 @@ function handleChangeStepVal(e:Event) {
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor:pointer;
 
             &--active {
             background-color: #49A171;
