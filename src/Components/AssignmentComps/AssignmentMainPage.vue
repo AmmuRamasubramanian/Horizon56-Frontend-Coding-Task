@@ -13,13 +13,6 @@ import Archery from '@/assets/icons/Archery.svg'
 
 const store=useAssignmentstore()
 
-interface Assignment {
-  id: number
-  title: string,
-  status: 'Draft' | 'Approved' | 'Active' | 'Completed'
-  remarks: string
-}
-
 interface Props{
   screenWidth:number
 }
