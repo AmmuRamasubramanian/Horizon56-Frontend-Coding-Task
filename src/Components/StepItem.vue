@@ -122,7 +122,7 @@ function handleChangeStepVal(e:Event) {
             :style="{ height: props.contentHeight + 'px' }"
             >
                 <textarea
-                v-model="stepDesc_val"
+                :value="stepDesc_val"
                 class="step-item__inputText"
                 placeholder="Share your reviews.."
                 :style="{
