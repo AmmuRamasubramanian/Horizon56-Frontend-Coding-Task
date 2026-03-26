@@ -19,3 +19,10 @@ BEM naming throughout: block__element--modifier
 All colors defined as CSS variables in _variables.scss
 All font families defined as CSS variables and loaded via @font-face
 Scoped SCSS per component, global resets in main.scss
+
+The task required a reusable step component. Additionally:
+A full Assignment management page was built to demonstrate the component in a real-world context
+The same StepFlow component is reused in a popup, driven by live store data
+Clicking a step in the popup updates the assignment status in the global store, which reflects immediately in the table
+Remarks are editable per step and persisted to the store
+Full mobile support with a bottom navigation tab bar
