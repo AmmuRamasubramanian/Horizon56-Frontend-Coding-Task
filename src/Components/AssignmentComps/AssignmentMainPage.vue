@@ -6,6 +6,10 @@ import SearchIcon from '@/assets/icons/searchIcon.svg'
 import Close from '@/assets/icons/close.svg'
 import {ref, computed} from 'vue'
 import JungleAlligator_searching from '@/assets/icons/jungleAlligator_searching.svg'
+import Workgroup from '@/assets/icons/Workgroup.svg'
+import Usercheck from '@/assets/icons/Usercheck.svg'
+import Shieldcheck from '@/assets/icons/Shieldcheck.svg'
+import Archery from '@/assets/icons/Archery.svg'
 
 const store=useAssignmentstore()
 
@@ -29,9 +33,18 @@ const showPopup=ref<Boolean>(false)
 const isHideAddititonalInfo=computed(()=>props.screenWidth<1020)
 const isMobileView=computed(()=>props.screenWidth<570)
 
-function handleChangeInputVal(e:Event) {
-    const target=e.target as HTMLInputElement
-    searchTxt.value=target.value
+const StatusIcons: Record<string, any> = {
+  Draft: Workgroup,
+  Approved: Usercheck,
+  Active: Shieldcheck,
+  Completed: Archery
+}
+
+const StatusColors: Record<string, string> = {
+  Draft: '#A0A0A0',       // gray
+  Approved: '#4CAF50',    // green
+  Active: '#2196F3',      // blue
+  Completed: '#FF9800'    // orange
 }
 
 function clearInput() {
@@ -122,6 +135,7 @@ const selectedItemVal=computed(()=>store.assignments.find(item=>item.id==selecte
 
             <div class="assignment-page__columns" v-if="!isHideAddititonalInfo">
               <div class="assignment-page__status">
+                <component  :style="{ fill: StatusColors[assignment.status] }" :is="StatusIcons[assignment.status]" class="assignment-page__status-icon"/>
                 <p class="assignment-page__status-text">
                   {{ assignment.status }}
                 </p>
@@ -281,13 +295,15 @@ const selectedItemVal=computed(()=>store.assignments.find(item=>item.id==selecte
   }
 
   &__status {
-    width: 100px;
+    width: 120px;
     display: flex;
     justify-content: center;
+    margin-right:10px;
   }
 
   &__remarks {
     width: 120px;
+    margin-right:10px;
     display: flex;
     justify-content: center;
   }
@@ -358,6 +374,14 @@ const selectedItemVal=computed(()=>store.assignments.find(item=>item.id==selecte
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;
+  }
+
+  &__status-icon{
+    width:14px;
+    height:14px;
+    min-width:14px;
+    min-height:14px;
+    margin-right:7px;
   }
 
   &__chevron {
