@@ -78,7 +78,6 @@ function handleChangeStepVal(e:Event) {
             'step-item__circle--active': props.isActive,
             'step-item__circle--inactive': !props.isActive
             }"
-            @click="emit('activate')"
         >
             <div 
             v-if="props.isActive"
@@ -100,12 +99,14 @@ function handleChangeStepVal(e:Event) {
         :class="{ 'step-item__content--with-gap': !props.isLast }"
         >
 
+        <div class="step-item__titleDiv" @click="emit('activate')">
         <p 
             class="step-item__title"
             :class="{ 'step-item__title--inactive': !props.isActive }"
         >
             {{ props.title.toUpperCase() }}
         </p>
+        </div>
 
         <div v-if="props.isActive">
 
@@ -158,7 +159,6 @@ function handleChangeStepVal(e:Event) {
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
 
             &--active {
             background-color: #49A171;
@@ -180,7 +180,6 @@ function handleChangeStepVal(e:Event) {
             width: 1.7px;
             flex: 1;
             background-color: var(--lighterAshBlue);
-            margin-top: 2px;
         }
 
         &__content {
@@ -190,6 +189,10 @@ function handleChangeStepVal(e:Event) {
             &--with-gap {
             padding-bottom: 26px;
             }
+        }
+
+        &__titleDiv{
+            cursor: pointer;
         }
 
         &__title {
