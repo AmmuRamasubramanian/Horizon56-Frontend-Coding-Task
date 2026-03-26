@@ -6,7 +6,7 @@ import SearchIcon from '@/assets/icons/searchIcon.svg'
 import Close from '@/assets/icons/close.svg'
 import {ref, computed} from 'vue'
 import JungleAlligator_searching from '@/assets/icons/jungleAlligator_searching.svg'
-import Workgroup from '@/assets/icons/Workgroup.svg'
+import Circle from '@/assets/icons/circle.svg'
 import Usercheck from '@/assets/icons/Usercheck.svg'
 import Shieldcheck from '@/assets/icons/Shieldcheck.svg'
 import Archery from '@/assets/icons/Archery.svg'
@@ -27,7 +27,7 @@ const isHideAddititonalInfo=computed(()=>props.screenWidth<1020)
 const isMobileView=computed(()=>props.screenWidth<570)
 
 const StatusIcons: Record<string, any> = {
-  Draft: Workgroup,
+  Draft: Circle,
   Approved: Usercheck,
   Active: Shieldcheck,
   Completed: Archery
@@ -128,7 +128,15 @@ const selectedItemVal=computed(()=>store.assignments.find(item=>item.id==selecte
 
             <div class="assignment-page__columns" v-if="!isHideAddititonalInfo">
               <div class="assignment-page__status">
-                <component  :style="{ fill: StatusColors[assignment.status] }" :is="StatusIcons[assignment.status]" class="assignment-page__status-icon"/>
+                <component  
+                  :style="{ 
+                    fill: StatusColors[assignment.status] ,
+                    width: assignment.status === 'Draft' ? '10px' : '14px',
+                    height: assignment.status === 'Draft' ? '10px' : '14px',
+                    marginTop:assignment.status === 'Draft' ? '2px' : '0px'
+                  }" 
+                  :is="StatusIcons[assignment.status]" 
+                />
                 <p class="assignment-page__status-text">
                   {{ assignment.status }}
                 </p>
@@ -367,6 +375,10 @@ const selectedItemVal=computed(()=>store.assignments.find(item=>item.id==selecte
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;
+  }
+
+  &__status-text{
+    margin-left:7px;
   }
 
   &__status-icon{

@@ -29,8 +29,8 @@ const props = defineProps<Props>()
 const steps: Step[] = [
   { id: 1, title: 'Draft',     subtitle: 'Pre execution', contentHeight: 140 },
   { id: 2, title: 'Approved',  subtitle: 'Pre execution', contentHeight: 90  },
-  { id: 3, title: 'Active',    subtitle: 'In progress',   contentHeight: 110 },
-  { id: 4, title: 'Completed', subtitle: 'Done',          contentHeight: 120 },
+  { id: 3, title: 'Active',    subtitle: 'Pre execution', contentHeight: 70 },
+  { id: 4, title: 'Completed', subtitle: 'Pre execution', contentHeight: 120 },
 ]
 
 const statusToStepMap: Record<string, number> = {

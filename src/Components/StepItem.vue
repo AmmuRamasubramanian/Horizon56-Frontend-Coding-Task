@@ -40,14 +40,6 @@ const emit = defineEmits<{
 
 const stepDesc_val=ref<string>(props.remarks ?? '')
 
-const StatusIcons: Record<string, any> = {
-  Draft: Workgroup,
-  Approved: Usercheck,
-  Active: Shieldcheck,
-  Completed: Archery
-}
-
-const IconComponent=computed(()=>StatusIcons[props.title])
 
 watch(
     ()=>[props.remarks, props.isActive],
@@ -111,7 +103,7 @@ function handleChangeStepVal(e:Event) {
         <div v-if="props.isActive">
 
             <div class="step-item__subheaderflex">
-            <IconComponent class="step-item__stepIcon"/>
+            <Workgroup class="step-item__stepIcon"/>
             <p class="step-item__subtitle">
             {{ props.subtitle }}
             </p>
