@@ -290,6 +290,7 @@ const filteredAssignment = computed(() => {
     border-left-color:var(--lighterAshBlue);
     cursor: pointer;
     user-select: none;
+    margin-left: 10px;
   }
 
   &__filterIcon{
