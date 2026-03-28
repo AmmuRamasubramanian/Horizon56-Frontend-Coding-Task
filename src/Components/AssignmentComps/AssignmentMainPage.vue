@@ -123,6 +123,9 @@ const filteredAssignment = computed(() => {
         </div>
         <div class="assignment-page__filterIconOuter" @click="handleOpenFilterOptions">
           <FilterSlider class="assignment-page__filterIcon"/>
+          <div class="assignment-page__filterSelectedBox" v-if="selectedfilterOptions.length!==0">
+              <p class="assignment-page__filterText">{{ selectedfilterOptions.length }}</p>
+          </div>
         </div>
         <FilterOptionsPopup
           v-if="showfilteroptions"
@@ -291,6 +294,7 @@ const filteredAssignment = computed(() => {
     cursor: pointer;
     user-select: none;
     margin-left: 10px;
+    position: relative;
   }
 
   &__filterIcon{
@@ -329,6 +333,27 @@ const filteredAssignment = computed(() => {
     width: 10px;
     height: 10px;
     fill: var(--steelBlue);
+  }
+
+  &__filterSelectedBox{
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    height:15px;
+    min-height:15px;
+    width:15px;
+    min-width:15px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-color:var(--pinkishred)
+  }
+
+  &__filterText{
+    color:white;
+    font-family:"Avenir-Medium";
+    font-size:0.6em;
   }
 
   &__content {
