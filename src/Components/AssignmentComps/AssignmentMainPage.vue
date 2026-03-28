@@ -10,6 +10,8 @@ import Circle from '@/assets/icons/circle.svg'
 import Usercheck from '@/assets/icons/Usercheck.svg'
 import Shieldcheck from '@/assets/icons/Shieldcheck.svg'
 import Archery from '@/assets/icons/Archery.svg'
+import FilterSlider from '@/assets/icons/filterSlider.svg'
+import FilterOptionsPopup from './FilterOptionsPopup.vue'
 
 const store=useAssignmentstore()
 
@@ -22,6 +24,8 @@ const props=defineProps<Props>()
 const searchTxt=ref<string>("")
 const selectedassignId=ref<number | null>(null)
 const showPopup=ref<Boolean>(false)
+const showfilteroptions=ref<Boolean>(false)
+const selectedfilterOptions=ref<string[]>([])
 
 const isHideAddititonalInfo=computed(()=>props.screenWidth<1020)
 const isMobileView=computed(()=>props.screenWidth<570)
@@ -41,25 +45,50 @@ const StatusColors: Record<string, string> = {
 }
 
 function clearInput() {
-    searchTxt.value=""
+  searchTxt.value=""
 }
 
-const filteredAssignment=computed(()=>{
-    return store.assignments.filter(a =>
-        a.title.toLowerCase().includes(searchTxt.value.toLowerCase())
-    )
-})
-
 function handleChangeShowPopup(boolVal:boolean) {
-    showPopup.value=boolVal
+  showPopup.value=boolVal
 }
 
 function handleClickAssignItem(id:number){
-    selectedassignId.value=id
-    handleChangeShowPopup(true)
+  selectedassignId.value=id
+  handleChangeShowPopup(true)
 }
 
 const selectedItemVal=computed(()=>store.assignments.find(item=>item.id==selectedassignId.value))
+
+//filter------------------------------------------------
+function handleOpenFilterOptions() {
+  showfilteroptions.value=!showfilteroptions.value
+}
+
+function handleCloseFilterOptions() {
+  showfilteroptions.value=false
+}
+
+function handleUpdateFilterOption(option: string) {
+  const index = selectedfilterOptions.value.indexOf(option)
+
+  if (index > -1) {
+    selectedfilterOptions.value.splice(index, 1)
+  } else {
+    selectedfilterOptions.value.push(option)
+  }
+}
+
+const filteredAssignment = computed(() => {
+  return store.assignments.filter(a => {
+    const matchesSearch = a.title
+      .toLowerCase()
+      .includes(searchTxt.value.toLowerCase())
+    const matchesStatus =
+      selectedfilterOptions.value.length === 0 ||
+      selectedfilterOptions.value.includes(a.status)
+    return matchesSearch && matchesStatus
+  })
+})
 
 </script>
 
@@ -75,21 +104,32 @@ const selectedItemVal=computed(()=>store.assignments.find(item=>item.id==selecte
 
       <!-- SEARCH -->
       <div class="assignment-page__search">
-        <SearchIcon class="assignment-page__search-icon" />
+        <div class="assignment-page__searchInnerdiv">
+          <SearchIcon class="assignment-page__search-icon" />
 
-        <input
-          v-model="searchTxt"
-          class="assignment-page__input"
-          placeholder="Search in #Assignments"
-        />
+          <input
+            v-model="searchTxt"
+            class="assignment-page__input"
+            placeholder="Search in #Assignments"
+          />
 
-        <div
-          v-if="searchTxt"
-          class="assignment-page__clear-btn"
-          @click="clearInput"
-        >
-          <Close class="assignment-page__clear-icon" />
+          <div
+            v-if="searchTxt"
+            class="assignment-page__clear-btn"
+            @click="clearInput"
+          >
+            <Close class="assignment-page__clear-icon" />
+          </div>
         </div>
+        <div class="assignment-page__filterIconOuter" @click="handleOpenFilterOptions">
+          <FilterSlider class="assignment-page__filterIcon"/>
+        </div>
+        <FilterOptionsPopup
+          v-if="showfilteroptions"
+          @close="handleCloseFilterOptions"
+          :selectedfilterOptions="selectedfilterOptions"
+          @updatefilter="handleUpdateFilterOption"
+        />
       </div>
     </div>
 
@@ -176,7 +216,6 @@ const selectedItemVal=computed(()=>store.assignments.find(item=>item.id==selecte
       @close="showPopup = false"
       :isMobileView="isMobileView"
     />
-
   </div>
 </template>
 
@@ -220,14 +259,45 @@ const selectedItemVal=computed(()=>store.assignments.find(item=>item.id==selecte
     height: 40px;
     display: flex;
     align-items: center;
-    padding: 0 12px;
+    padding-left:12px;
     border-radius: 10px;
     background: var(--veryDrkGreyishBlue);
     border: 0.5px solid var(--ashBlue);
+    position: relative;
 
     @media (max-width: 570px) {
       width: 100%;
     }
+  }
+
+  &__searchInnerdiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex:1
+  }
+
+  &__filterIconOuter{
+    width:40px;
+    min-width: 40px;
+    height:100%;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left-width:0.8px;
+    border-left-style:solid;
+    border-left-color:var(--lighterAshBlue);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &__filterIcon{
+    width: 13px;
+    height:13px;
+    min-width:13px;
+    min-height:13px;
+    fill:white;
   }
 
   &__search-icon {
