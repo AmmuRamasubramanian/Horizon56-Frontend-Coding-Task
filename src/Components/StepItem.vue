@@ -16,7 +16,7 @@ interface Assignment {
 
 interface Props{
     title:string
-    id?:number
+    id:number
     subtitle?:string
     remarks?:string
     contentHeight:number
@@ -32,7 +32,7 @@ const props=withDefaults(defineProps<Props>(),{
 })
 
 const emit = defineEmits<{
-  activate: []
+  activate: [id:number]
 }>()
 
 const stepDesc_val=ref<string>(props.remarks ?? '')
@@ -67,7 +67,7 @@ function handleChangeStepVal(e:Event) {
             'step-item__circle--active': props.isActive,
             'step-item__circle--inactive': !props.isActive
             }"
-            @click="emit('activate')"
+            @click="emit('activate', props.id)"
         >
             <div 
             v-if="props.isActive"
@@ -89,7 +89,7 @@ function handleChangeStepVal(e:Event) {
         :class="{ 'step-item__content--with-gap': !props.isLast }"
         >
 
-        <div class="step-item__titleDiv" @click="emit('activate')">
+        <div class="step-item__titleDiv" @click="emit('activate', props.id)">
         <p 
             class="step-item__title"
             :class="{ 'step-item__title--inactive': !props.isActive }"

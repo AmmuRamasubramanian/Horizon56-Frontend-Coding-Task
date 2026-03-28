@@ -98,7 +98,7 @@ const remarksMap = computed(() => {
       :isActive="step.id === activeStepId"
       :withUpdatedVal="props.withUpdatedVal"
       :selectedassignItemId="props.withUpdatedVal ? props.selectedassignItem?.id : null"
-      @activate="activateStep(step.id)"
+      @activate="activateStep"
     />
   </div>
 </template>
