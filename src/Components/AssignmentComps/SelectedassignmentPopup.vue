@@ -54,12 +54,11 @@ watch(
 <template>
     <div 
     class="selectedAssignPopup"
-    @click="onClose"
+    @click.self="onClose"
     ref="popupRef"
     >
         <Motion 
             class="selectedAssignPopup__contentdiv" 
-            @click.stop
         >
             <!-- <div class='selectedAssignPopup__headercontainer'>
                 <p class="selectedAssignPopup__title">{{props.selectedassignItem?.title}}</p>
