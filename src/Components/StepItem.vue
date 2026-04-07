@@ -39,9 +39,9 @@ const stepDesc_val=ref<string>(props.remarks ?? '')
 
 
 watch(
-    ()=>[props.remarks, props.isActive],
-    ([isActive])=>{
-        stepDesc_val.value=props.remarks ?? ''
+    ()=>props.remarks,
+    (newVal)=>{
+        stepDesc_val.value=newVal ?? ''
     }
 )
 
